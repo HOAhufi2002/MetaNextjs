@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { Modal, message } from 'antd';
-import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Button, Card, CardHeader, CardContent } from '@mui/material';
+import { TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Paper, Button, Card, CardHeader, CardContent, TablePagination } from '@mui/material';
 import { EditOutlined, DeleteOutlined, AddOutlined } from '@mui/icons-material';
 import AddProductForm from '../../../component/sanPhamcomponent/action-component/AddProductForm';
 import EditProductForm from '../../../component/sanPhamcomponent/action-component/EditProductForm';
@@ -14,7 +14,6 @@ const ListComponent = () => {
   const { Search } = Input;
 
   const [searchKeyword, setSearchKeyword] = useState('');
-
   const [data, setData] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
@@ -30,21 +29,18 @@ const ListComponent = () => {
     fetchDataAndUpdateState();
     fetchCategoriesAndUpdateState();
   }, []);
+
   const handleSearch = async (value: string) => {
     setSearchKeyword(value);
-
-    try {
-      const searchData = await fetchData(value);
-      setData(searchData);
-    } catch (error) {
-      setError('Error fetching data');
-    }
+    setCurrentPage(1); // Reset current page when performing a new search
+    fetchDataAndUpdateState(value);
   };
-  const fetchDataAndUpdateState = async () => {
+
+  const fetchDataAndUpdateState = async (searchValue?: string) => {
     setIsLoading(true);
     try {
-      const data = await fetchData();
-      setData(data);
+      const searchData = await fetchData(searchValue || searchKeyword);
+      setData(searchData);
       setIsLoading(false);
     } catch (error) {
       setError('Error fetching data');
@@ -110,24 +106,51 @@ const ListComponent = () => {
       message.error('Lỗi khi cập nhật sản phẩm');
     }
   };
+
+  const handleChangePage = (newPage: number) => {
+    setCurrentPage(newPage);
+  };
+
+  const renderData = () => {
+    const startIndex = (currentPage - 1) * pageSize;
+    const endIndex = startIndex + pageSize;
+    return data.slice(startIndex, endIndex).map((row, index) => (
+      <TableRow key={row.idSanPham} style={{ borderBottom: index === pageSize - 1 ? 'none' : '1px solid #ddd' }}>
+        <TableCell>{row.tenSanPham}</TableCell>
+        <TableCell>{row.gia}</TableCell>
+        <TableCell>
+          <DeleteOutlined
+            style={{ color: 'red', cursor: 'pointer' }}
+            onClick={() => handleDelete(row.idSanPham)}
+          />
+          <EditOutlined
+            style={{ color: 'blue', marginLeft: 8, cursor: 'pointer' }}
+            onClick={() => handleEdit(row)}
+          />
+        </TableCell>
+      </TableRow>
+    ));
+  };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    handleSearch(value); // Gọi hàm xử lý tìm kiếm với từ khóa mới
+    handleSearch(value); // Call the search function with the new keyword
   };
+
   return (
-<div >
-  <div style={{ borderRadius: 0, boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)' }}>
-    <CardHeader
-      title={<span className="card-label">Danh Mục Sản Phẩm</span>}
-      action={
-        <div className="card-toolbar">
-          <Button variant="contained" style={{ marginRight: '10px' }} onClick={() => setShowAddForm(true)}>Import Dữ Liệu</Button>
-          <Button variant="contained" onClick={() => setShowAddForm(true)}>Thêm Sản Phẩm</Button>
-        </div>
-      }
-    />
-    <hr></hr>
-    <CardContent>
+    <div>
+      <div style={{ borderRadius: 0, boxShadow: '0px 1px 2px rgba(0, 0, 0, 0.05)' }}>
+        <CardHeader
+          title={<span className="card-label">Danh Mục Sản Phẩm</span>}
+          action={
+            <div className="card-toolbar">
+              <Button variant="contained" style={{ marginRight: '10px' }} onClick={() => setShowAddForm(true)}>Import Dữ Liệu</Button>
+              <Button variant="contained" onClick={() => setShowAddForm(true)}>Thêm Sản Phẩm</Button>
+            </div>
+          }
+        />
+
+        <CardContent>
           <div className="kt-form">
             <div className="kt-form__filtration">
               <div className="row align-items-center">
@@ -135,93 +158,85 @@ const ListComponent = () => {
                   <Space.Compact >
                     <Search
                       placeholder="Tìm kiếm"
-                      onChange={handleChange} // Gọi hàm xử lý khi nội dung thay đổi
-                      style={{ width: '20%' }}
-                    />
+                      onChange={handleChange}
+                      style={{ width: '100%' }}
+                      />
                   </Space.Compact>
                 </div>
               </div>
             </div>
           </div>
         </CardContent>
+      </div>
 
-  </div>
-
-  <div >
-    <CardContent>
-      <TableContainer>
-        <Table className="table table-striped table-hover">
-          <TableHead>
-            <TableRow>
-
-              <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Tên Sản Phẩm</TableCell>
-              <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Giá</TableCell>
-              <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Thao Tác</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((row, index) => (               
-
-              <TableRow key={row.idSanPham} style={{ borderBottom: index === data.length - 1 ? 'none' : '1px solid #ddd' }}>
-                 <TableCell style={{ display: 'none' }}>{row.idSanPham}</TableCell>
-                <TableCell>{row.tenSanPham}</TableCell>
-                <TableCell>{row.gia}</TableCell>
-                <TableCell style={{ display: 'none' }}>{row.idLoai}</TableCell>
-                <TableCell>
-                  <DeleteOutlined
-                    style={{ color: 'red', cursor: 'pointer' }}
-                    onClick={() => handleDelete(row.idSanPham)}
-                  />
-                  <EditOutlined
-                    style={{ color: 'blue', marginLeft: 8, cursor: 'pointer' }}
-                    onClick={() => handleEdit(row)}
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Modal
-        title="Thêm sản phẩm mới"
-        visible={showAddForm}
-        onCancel={() => setShowAddForm(false)}
-        footer={null}
-      >
-        <AddProductForm onFinish={handleAddProduct} categories={categories} />
-      </Modal>
-      <Modal
-        title="Xác nhận xóa sản phẩm"
-        visible={confirmDeleteVisible}
-        onOk={confirmDelete}
-        onCancel={() => setConfirmDeleteVisible(false)}
-      >
-        <p>Bạn có chắc chắn muốn xóa sản phẩm này?</p>
-      </Modal>
-      {editingProduct && (
-        <Modal
-          title="Chỉnh sửa sản phẩm"
-          visible={!!editingProduct}
-          onCancel={() => setEditingProduct(null)}
-          footer={null}
-        >
-          <EditProductForm
-            onFinish={handleSaveEdit}
-            initialValues={editingProduct}
-            categories={categories}
+      <div>
+        <CardContent>
+          <TableContainer>
+            <Table className="table table-striped table-hover">
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Tên Sản Phẩm</TableCell>
+                  <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Giá</TableCell>
+                  <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Thao Tác</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {renderData()}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={data.length}
+            rowsPerPage={pageSize}
+            page={currentPage - 1}
+            onPageChange={(event, newPage) => handleChangePage(newPage + 1)}
+            onRowsPerPageChange={(event) => {
+              setPageSize(parseInt(event.target.value, 10));
+              setCurrentPage(1); // Reset current page when changing page size
+            }}
           />
-        </Modal>
-      )}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : null}
-    </CardContent>
-  </div>
-</div>
-
+          <Modal
+            title="Thêm sản phẩm mới"
+            visible={showAddForm}
+            onCancel={() => setShowAddForm(false)}
+            footer={null}
+          >
+            <AddProductForm onFinish={handleAddProduct} categories={categories} />
+          </Modal>
+          <Modal
+            title="Xác nhận xóa sản phẩm"
+            visible={confirmDeleteVisible}
+            onOk={confirmDelete}
+            onCancel={() => setConfirmDeleteVisible(false)}
+          >
+            <p>Bạn có chắc chắn muốn xóa sản phẩm này?</p>
+          </Modal>
+          {editingProduct && (
+            <Modal
+              title="Chỉnh sửa sản phẩm"
+              visible={!!editingProduct}
+              onCancel={() => setEditingProduct(null)}
+              footer={null}
+            >
+              <EditProductForm
+                onFinish={handleSaveEdit}
+                initialValues={editingProduct}
+                categories={categories}
+              />
+            </Modal>
+          )}
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : error ? (
+            <p>{error}</p>
+          ) : null}
+        </CardContent>
+      </div>
+    </div>
   );
 };
 
 export default ListComponent;
+

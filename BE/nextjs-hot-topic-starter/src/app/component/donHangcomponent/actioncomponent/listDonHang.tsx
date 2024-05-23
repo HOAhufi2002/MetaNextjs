@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import React, { useState, useEffect, useRef, RefObject } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import {
@@ -20,6 +20,7 @@ import { fetchDonHang, fetchDonHangChiTiet } from '../../../component/donHangcom
 import { ListDonHang } from '../../../component/donHangcomponent/modelType/listDonHangModel';
 import { Input } from 'antd';
 import { Space } from 'antd';
+import { TablePagination } from '@mui/material';
 
 interface InvoiceDetailProps {
   selectedDonHang: any;
@@ -31,48 +32,45 @@ const InvoiceDetail = React.forwardRef<HTMLDivElement, InvoiceDetailProps>((prop
 
   return (
     <div ref={ref} style={{ fontSize: '10px' }}>
-    <h2 style={{ textAlign: 'center' }}>Chi tiết hóa đơn</h2>
-    <h3 style={{ textAlign: 'center' }}>Tên cửa hàng : Quán Cafe DPS Hồ Chí Minh</h3>
-    <h4 style={{ textAlign: 'center' }}>Địa chỉ : 78 Tân Sơn Nhì , Tân Phú , Thành Phố Hồ Chí Minh</h4>
-    {selectedDonHang && (
-      <div style={{ marginBottom: '20px', textAlign: 'left' }}>
-        <p><strong>Tên khách hàng:</strong> {selectedDonHang.tenKhachHang}</p>
-        <p><strong>Số điện thoại:</strong> {selectedDonHang.soDienThoai}</p>
-        <p><strong>Ngày Đặt:</strong> {new Date().toLocaleString()}</p>
+      <h2 style={{ textAlign: 'center' }}>Chi tiết hóa đơn</h2>
+      <h3 style={{ textAlign: 'center' }}>Tên cửa hàng : Quán Cafe DPS Hồ Chí Minh</h3>
+      <h4 style={{ textAlign: 'center' }}>Địa chỉ : 78 Tân Sơn Nhì , Tân Phú , Thành Phố Hồ Chí Minh</h4>
+      {selectedDonHang && (
+        <div style={{ marginBottom: '20px', textAlign: 'left' }}>
+          <p><strong>Tên khách hàng:</strong> {selectedDonHang.tenKhachHang}</p>
+          <p><strong>Số điện thoại:</strong> {selectedDonHang.soDienThoai}</p>
+          <p><strong>Ngày Đặt:</strong> {new Date().toLocaleString()}</p>
+        </div>
+      )}
 
-      </div>
-    )}
-
-    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-      <thead>
-        <tr>
-          <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Tên sản phẩm</th>
-          <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Số lượng</th>
-          <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Giá</th>
-          <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Thành Tiền</th>
-        </tr>
-      </thead>
-      <tbody>
-        {selectedChiTiet && selectedChiTiet.map((item: any, index: number) => (
-          <tr key={index}>
-            
-            <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{item.tenSanPham}</td>
-            <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{item.soLuong}</td>
-            <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{item.gia.toLocaleString()}</td>
-            <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{(item.gia * item.soLuong).toLocaleString()}</td>
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr>
+            <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Tên sản phẩm</th>
+            <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Số lượng</th>
+            <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Giá</th>
+            <th style={{ borderBottom: '1px solid #ddd', padding: '8px', textAlign: 'left' }}>Thành Tiền</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
-    {selectedDonHang && (
-      <div style={{ textAlign: 'right', marginRight: '30px', marginBottom: '20px' }}>
-        <p><strong>Tổng Tiền:</strong> {selectedDonHang.tongTien.toLocaleString()}</p>
-      </div>
-    )}
-
-    <center><p style={{ fontSize: '10px' }}><strong>passwifi:</strong> 1234567890123</p></center>
-    <center><p style={{ fontSize: '10px' }}>Xin cảm ơn và hẹn gặp lại quý khách</p></center>
-  </div>
+        </thead>
+        <tbody>
+          {selectedChiTiet && selectedChiTiet.map((item: any, index: number) => (
+            <tr key={index}>
+              <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{item.tenSanPham}</td>
+              <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{item.soLuong}</td>
+              <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{item.gia.toLocaleString()}</td>
+              <td style={{ borderBottom: '1px solid #ddd', padding: '8px' }}>{(item.gia * item.soLuong).toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {selectedDonHang && (
+        <div style={{ textAlign: 'right', marginRight: '30px', marginBottom: '20px' }}>
+          <p><strong>Tổng Tiền:</strong> {selectedDonHang.tongTien.toLocaleString()}</p>
+        </div>
+      )}
+      <center><p style={{ fontSize: '10px' }}><strong>passwifi:</strong> 1234567890123</p></center>
+      <center><p style={{ fontSize: '10px' }}>Xin cảm ơn và hẹn gặp lại quý khách</p></center>
+    </div>
   );
 });
 
@@ -84,6 +82,8 @@ const MyComponentDonHang = () => {
   const [selectedDonHang, setSelectedDonHang] = useState<any>(null);
   const [selectedChiTiet, setSelectedChiTiet] = useState<any>(null);
   const [open, setOpen] = useState(false);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const componentRef = useRef<HTMLDivElement>(null); // Sửa đổi kiểu của useRef
 
   useEffect(() => {
@@ -121,6 +121,15 @@ const MyComponentDonHang = () => {
     content: () => componentRef.current,
   });
 
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <div>
       <CardHeader
@@ -132,7 +141,6 @@ const MyComponentDonHang = () => {
           </div>
         }
       />
-      <hr />
       <CardContent>
         <div className="kt-form">
           <div className="kt-form__filtration">
@@ -141,7 +149,7 @@ const MyComponentDonHang = () => {
                 <Space.Compact >
                   <Search
                     placeholder="Tìm kiếm"
-                    style={{ width: '20%' }}
+                    style={{ width: '100%' }}
                   />
                 </Space.Compact>
               </div>
@@ -149,7 +157,6 @@ const MyComponentDonHang = () => {
           </div>
         </div>
       </CardContent>
-
       <CardContent>
         <TableContainer>
           <Table>
@@ -165,7 +172,7 @@ const MyComponentDonHang = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row, index) => (
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                 <TableRow key={index}>
                   <TableCell>{row.tenKhachHang}</TableCell>
                   <TableCell>{row.soDienThoai}</TableCell>
@@ -206,6 +213,18 @@ const MyComponentDonHang = () => {
           </Fade>
         </Modal>
       </CardContent>
+
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 25]}
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </div>
     </div>
   );
 };

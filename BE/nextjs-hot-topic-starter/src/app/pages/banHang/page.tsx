@@ -1,12 +1,13 @@
-'use client'
+"use client"
 import React, { useState, useEffect } from 'react';
-import { CardHeader, CardContent, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button, Modal, TextField,IconButton } from '@mui/material';
+import { CardHeader, CardContent, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Button, Modal, TextField, IconButton } from '@mui/material';
 import { fetchData, addBill } from '../../component/banHangcomponent/services/services';
 import { Item } from '../../component/banHangcomponent/modelType/donHangModel';
 import { message } from 'antd';
-
-import AddIcon  from '@mui/icons-material/Add';
+import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import TablePagination from '@mui/material/TablePagination';
+
 const MyComponent = () => {
   const [data, setData] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -16,6 +17,8 @@ const MyComponent = () => {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [selectedProductDetails, setSelectedProductDetails] = useState<Item[]>([]);
   const [productQuantities, setProductQuantities] = useState<any>({});
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   useEffect(() => {
     fetchDataAndUpdateState();
@@ -60,8 +63,7 @@ const MyComponent = () => {
     }, 0);
     setTotalPrice(totalPrice);
   };
-  
-  
+
   const handleSaveCustomerInfo = async () => {
     try {
       const totalQuantity = Object.values<number>(productQuantities).reduce((acc, quantity) => acc + quantity, 0);
@@ -78,9 +80,9 @@ const MyComponent = () => {
           gia: data.find(item => item.idSanPham.toString() === productId)?.gia || 0,
         })),
       };
-  
+
       await addBill(billData);
-  
+
       setShowAddForm(false);
       setCustomerInfo({ tenKhachHang: '', soDienThoai: '' });
       setProductQuantities({});
@@ -91,7 +93,13 @@ const MyComponent = () => {
       message.error('Đã xảy ra lỗi khi thêm đơn hàng!');
     }
   };
-  
+
+  const getPageData = () => {
+    const startIndex = currentPage * pageSize;
+    const endIndex = startIndex + pageSize;
+    return data.slice(startIndex, endIndex);
+  };
+
   return (
     <div>
       <div>
@@ -114,8 +122,8 @@ const MyComponent = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data.map((row, index) => (
-                  <TableRow key={row.idSanPham} style={{ borderBottom: index === data.length - 1 ? 'none' : '1px solid #ddd' }}>
+                {getPageData().map((row, index) => (
+                  <TableRow key={row.idSanPham} style={{ borderBottom: index === getPageData().length - 1 ? 'none' : '1px solid #ddd' }}>
                     <TableCell>{row.tenSanPham}</TableCell>
                     <TableCell>{row.gia}</TableCell>
                     <TableCell>
@@ -139,55 +147,67 @@ const MyComponent = () => {
             </Table>
           </TableContainer>
 
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={data.length}
+            rowsPerPage={pageSize}
+            page={currentPage}
+            onPageChange={(event, newPage) => setCurrentPage(newPage)}
+            onRowsPerPageChange={(event) => {
+              setPageSize(parseInt(event.target.value, 10));
+              setCurrentPage(0); // Reset current page when changing page size
+            }}
+          />
+
           {isLoading ? (
             <p>Loading...</p>
           ) : error ? (
             <p>{error}</p>
           ) : null}
         </CardContent>
-      </div>
-
-      <Modal open={showAddForm} onClose={() => setShowAddForm(false)}>
-        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '5px' }}>
-          <h2>Thông tin khách hàng</h2>
-          <TextField
-            label="Tên Khách Hàng"
-            name="tenKhachHang"
-            value={customerInfo.tenKhachHang}
-            onChange={(e) => setCustomerInfo({ ...customerInfo, tenKhachHang: e.target.value })}
-            fullWidth
-            margin="normal"
-          />
-          <TextField
-            label="Số Điện Thoại"
-            name="soDienThoai"
-            value={customerInfo.soDienThoai}
-            onChange={(e) => setCustomerInfo({ ...customerInfo, soDienThoai: e.target.value })}
-            fullWidth
-            margin="normal"
-          />
-          <div>
-            <h3>Danh sách sản phẩm đã chọn:</h3>
-            <ul>
-              {Object.keys(productQuantities).map(productId => {
-                const product = data.find(item => item.idSanPham.toString() === productId);
-                if (product) {
-                  return (
-                    <li key={productId}>
-                      {product.tenSanPham} - ID: {productId} - Số lượng: {productQuantities[productId] || 1} - Giá: {(product.gia || 0) * (productQuantities[productId] || 1)}
-                    </li>
-                  );
-                }
-                return null;
-              })}
-            </ul>
-            <h3>Tổng tiền: {totalPrice}</h3>
-          </div>
-          <center><Button variant="contained" color="primary" onClick={handleSaveCustomerInfo}>Xác Nhận</Button></center>
         </div>
-      </Modal>
-    </div>
-  );
-};
 
+<Modal open={showAddForm} onClose={() => setShowAddForm(false)}>
+  <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#fff', padding: '20px', borderRadius: '5px' }}>
+    <h2>Thông tin khách hàng</h2>
+    <TextField
+      label="Tên Khách Hàng"
+      name="tenKhachHang"
+      value={customerInfo.tenKhachHang}
+      onChange={(e) => setCustomerInfo({ ...customerInfo, tenKhachHang: e.target.value })}
+      fullWidth
+      margin="normal"
+    />
+    <TextField
+      label="Số Điện Thoại"
+      name="soDienThoai"
+      value={customerInfo.soDienThoai}
+      onChange={(e) => setCustomerInfo({ ...customerInfo, soDienThoai: e.target.value })}
+      fullWidth
+      margin="normal"
+    />
+    <div>
+      <h3>Danh sách sản phẩm đã chọn:</h3>
+      <ul>
+        {Object.keys(productQuantities).map(productId => {
+          const product = data.find(item => item.idSanPham.toString() === productId);
+          if (product) {
+            return (
+              <li key={productId}>
+                {product.tenSanPham} - ID: {productId} - Số lượng: {productQuantities[productId] || 1} - Giá: {(product.gia || 0) * (productQuantities[productId] || 1)}
+              </li>
+            );
+          }
+          return null;
+        })}
+      </ul>
+      <h3>Tổng tiền: {totalPrice}</h3>
+    </div>
+    <center><Button variant="contained" color="primary" onClick={handleSaveCustomerInfo}>Xác Nhận</Button></center>
+  </div>
+</Modal>
+</div>
+);
+};
 export default MyComponent;

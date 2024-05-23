@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react';
-import {CardContent,TableContainer,Table,TableHead,TableBody,TableRow,TableCell,Modal,Backdrop,Fade,Button,Card,CardHeader,} from '@mui/material';
+import { CardContent, TableContainer, Table, TableHead, TableBody, TableRow, TableCell, Modal, Backdrop, Fade, Button, Card, CardHeader, TablePagination } from '@mui/material';
 import { fetchDataTheoNgay } from '../../../component/thongKecomponent/services/services';
 import { Item } from '../../../component/thongKecomponent/modelType/thongKemodel';
 import { Input } from 'antd';
@@ -11,6 +11,8 @@ const MyComponentThongKeTheoNgay = () => {
   const [data, setData] = useState<Item[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
 
   useEffect(() => {
     fetchDataNgay();
@@ -27,6 +29,16 @@ const MyComponentThongKeTheoNgay = () => {
       setIsLoading(false);
     }
   };
+
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <div>
       <CardHeader
@@ -38,7 +50,6 @@ const MyComponentThongKeTheoNgay = () => {
           </div>
         }
       />
-      <hr />
       <CardContent>
         <div className="kt-form">
           <div className="kt-form__filtration">
@@ -47,7 +58,7 @@ const MyComponentThongKeTheoNgay = () => {
                 <Space.Compact >
                   <Search
                     placeholder="Tìm kiếm"
-                    style={{ width: '20%' }}
+                    style={{ width: '100%' }}
                   />
                 </Space.Compact>
               </div>
@@ -61,19 +72,17 @@ const MyComponentThongKeTheoNgay = () => {
           <Table>
             <TableHead>
               <TableRow>
-              <TableCell style={{ fontWeight: 'bold', color: 'green' }}>ngayDat</TableCell>
+                <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Ngày Đặt</TableCell>
                 <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Số Lượng</TableCell>
                 <TableCell style={{ fontWeight: 'bold', color: 'green' }}>Tổng Tiền</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((row, index) => (
+              {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
                 <TableRow key={index}>
-<TableCell>{new Date(row.ngayDat).toLocaleDateString()}</TableCell>
-
+                  <TableCell>{new Date(row.ngayDat).toLocaleDateString()}</TableCell>
                   <TableCell>{row.soLuongDonHang}</TableCell>
                   <TableCell>{row.tongTien}</TableCell>
-       
                 </TableRow>
               ))}
             </TableBody>
@@ -82,7 +91,18 @@ const MyComponentThongKeTheoNgay = () => {
 
         {isLoading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-    
+
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={data.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </div>
       </CardContent>
     </div>
   );
