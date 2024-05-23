@@ -24,9 +24,22 @@ namespace CoffeManagement.Controllers
                 bool isValid = ValidateLogin(username, password);
                 if (isValid)
                 {
-                    string role = GetUserRole(username);
-                    // Lưu thông tin đăng nhập vào session hoặc JWT token
-                    return Ok(new { message = "Đăng nhập thành công", role = role });
+                    var userData = GetUserData(username);
+                    if (userData != null)
+                    {
+                        return Ok(new
+                        {
+                            message = "Đăng nhập thành công",
+                            userId = userData.userId,
+                            username = userData.username,
+                            roleName = userData.roleName,
+                            tenNhomQuyen = userData.tenNhomQuyen
+                        });
+                    }
+                    else
+                    {
+                        return StatusCode(500, new { message = "Không thể lấy thông tin người dùng" });
+                    }
                 }
                 else
                 {
@@ -38,6 +51,40 @@ namespace CoffeManagement.Controllers
                 return StatusCode(500, new { message = "Đã xảy ra lỗi trong quá trình xác thực", error = ex.Message });
             }
         }
+
+        private UserData GetUserData(string username)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                string query = @"SELECT n.idNguoiDung,  d.tenDangNhap, nq.tenNhomQuyen, q.tenQuyen
+                        FROM nguoidung n 
+                        JOIN dangnhap d ON n.idDangNhap = d.idDangNhap
+                        JOIN nhomquyen nq ON d.idNhomQuyen = nq.idNhomQuyen
+                        JOIN quyen q ON nq.idQuyen = q.idQuyen
+                        WHERE  d.tenDangNhap = @Username";
+                SqlCommand command = new SqlCommand(query, connection);
+                command.Parameters.AddWithValue("@Username", username);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new UserData
+                        {
+                            userId = reader.GetInt32(0),
+                            username = reader.GetString(1),
+                            roleName = reader.GetString(2),
+                            tenNhomQuyen = reader.GetString(3)
+                        };
+                    }
+                    else
+                    {
+                        return null; // User not found
+                    }
+                }
+            }
+        }
+
 
         private bool ValidateLogin(string username, string password)
         {
@@ -53,17 +100,15 @@ namespace CoffeManagement.Controllers
             }
         }
 
-        private string GetUserRole(string username)
-        {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-                string query = "SELECT NQ.tenNhomQuyen FROM NhomQuyen NQ JOIN DangNhap DN ON NQ.idNhomQuyen = DN.idNhomQuyen WHERE DN.tenDangNhap = @Username";
-                SqlCommand command = new SqlCommand(query, connection);
-                command.Parameters.AddWithValue("@Username", username);
-                string role = (string)command.ExecuteScalar();
-                return role;
-            }
-        }
+       
+
     }
+}
+public class UserData
+{
+    public int userId { get; set; }
+    public string tenNhomQuyen { get; set; }
+    public string username { get; set; }
+    public string roleName { get; set; }
+
 }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Intern Đại Phát\\NextJsCoffe\\CoffeManagement\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj": {}
+    "D:\\Intern Đại Phát\\MetaNextjs\\API\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj": {}
   },
   "projects": {
-    "D:\\Intern Đại Phát\\NextJsCoffe\\CoffeManagement\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj": {
+    "D:\\Intern Đại Phát\\MetaNextjs\\API\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Intern Đại Phát\\NextJsCoffe\\CoffeManagement\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj",
+        "projectUniqueName": "D:\\Intern Đại Phát\\MetaNextjs\\API\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj",
         "projectName": "CoffeManagement",
-        "projectPath": "D:\\Intern Đại Phát\\NextJsCoffe\\CoffeManagement\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj",
+        "projectPath": "D:\\Intern Đại Phát\\MetaNextjs\\API\\CoffeManagement\\CoffeManagement\\CoffeManagement.csproj",
         "packagesPath": "C:\\Users\\kingg\\.nuget\\packages\\",
-        "outputPath": "D:\\Intern Đại Phát\\NextJsCoffe\\CoffeManagement\\CoffeManagement\\CoffeManagement\\obj\\",
+        "outputPath": "D:\\Intern Đại Phát\\MetaNextjs\\API\\CoffeManagement\\CoffeManagement\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\kingg\\AppData\\Roaming\\NuGet\\NuGet.Config",
