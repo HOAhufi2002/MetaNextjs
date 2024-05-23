@@ -1,0 +1,70 @@
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\appsettings.Development.json
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\appsettings.json
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.exe
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.deps.json
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.runtimeconfig.json
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.runtimeconfig.dev.json
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\ref\CoffeManagement.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.pdb
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.OpenApi.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\System.Data.SqlClient.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.AssemblyInfoInputs.cache
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.AssemblyInfo.cs
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.csproj.CoreCompileInputs.cache
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\staticwebassets\CoffeManagement.StaticWebAssets.Manifest.cache
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\staticwebassets\CoffeManagement.StaticWebAssets.xml
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\scopedcss\bundle\CoffeManagement.styles.css
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.RazorTargetAssemblyInfo.cache
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.csproj.CopyComplete
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\ref\CoffeManagement.dll
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.pdb
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.genruntimeconfig.cache
+C:\Users\kingg\source\repos\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.csproj.AssemblyReference.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\appsettings.Development.json
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\appsettings.json
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.exe
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.deps.json
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.runtimeconfig.json
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.runtimeconfig.dev.json
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\ref\CoffeManagement.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\CoffeManagement.pdb
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.OpenApi.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\System.Data.SqlClient.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win-arm64\native\sni.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win-x64\native\sni.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win-x86\native\sni.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\bin\Debug\net5.0\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.csproj.AssemblyReference.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.GeneratedMSBuildEditorConfig.editorconfig
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.AssemblyInfoInputs.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.AssemblyInfo.cs
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.csproj.CoreCompileInputs.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.MvcApplicationPartsAssemblyInfo.cs
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.MvcApplicationPartsAssemblyInfo.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\staticwebassets\CoffeManagement.StaticWebAssets.Manifest.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\staticwebassets\CoffeManagement.StaticWebAssets.xml
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\scopedcss\bundle\CoffeManagement.styles.css
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.RazorTargetAssemblyInfo.cache
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.csproj.CopyComplete
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\ref\CoffeManagement.dll
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.pdb
+D:\Intern Đại Phát\NextJsCoffe\CoffeManagement\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.genruntimeconfig.cache
