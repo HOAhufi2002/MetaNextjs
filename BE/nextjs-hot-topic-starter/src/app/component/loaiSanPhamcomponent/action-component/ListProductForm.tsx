@@ -8,6 +8,7 @@ import EditProductForm from '../../../component/loaiSanPhamcomponent/action-comp
 import { fetchDataLoai ,addProductloai,deleteProductloai} from '../../../component/loaiSanPhamcomponent/services/services';
 import { Item } from '../../../component/loaiSanPhamcomponent/modelType/loaiSPmodel';
 import { Input } from 'antd';
+import { Space } from 'antd';
 
 const MyComponentLSP = () => {
   const { Search } = Input;
@@ -84,12 +85,12 @@ const MyComponentLSP = () => {
             <div className="kt-form__filtration">
               <div className="row align-items-center">
                 <div className="col-md-3 kt-margin-bottom-10-mobile">
-                  <Input.Group >
+                  < Space.Compact>
                     <Search
                       placeholder="Tìm kiếm"
                       style={{ width: '20%' }}
                     />
-                  </Input.Group>
+                  </Space.Compact>
                 </div>
               </div>
             </div>

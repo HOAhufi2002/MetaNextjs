@@ -8,6 +8,7 @@ import EditProductForm from '../../../component/sanPhamcomponent/action-componen
 import { fetchData, fetchDataLoai, addProduct, deleteProduct, updateProduct } from '../../../component/sanPhamcomponent/services/services';
 import { Item } from '../../../component/sanPhamcomponent/modelType/types';
 import { Input } from 'antd';
+import { Space } from 'antd';
 
 const ListComponent = () => {
   const { Search } = Input;
@@ -131,13 +132,13 @@ const ListComponent = () => {
             <div className="kt-form__filtration">
               <div className="row align-items-center">
                 <div className="col-md-3 kt-margin-bottom-10-mobile">
-                  <Input.Group >
+                  <Space.Compact >
                     <Search
                       placeholder="Tìm kiếm"
                       onChange={handleChange} // Gọi hàm xử lý khi nội dung thay đổi
                       style={{ width: '20%' }}
                     />
-                  </Input.Group>
+                  </Space.Compact>
                 </div>
               </div>
             </div>

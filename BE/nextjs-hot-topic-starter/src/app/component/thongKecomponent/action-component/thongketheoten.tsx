@@ -4,6 +4,8 @@ import {CardContent,TableContainer,Table,TableHead,TableBody,TableRow,TableCell,
 import { fetchDataTheoTen } from '../../../component/thongKecomponent/services/services';
 import { Item } from '../../../component/thongKecomponent/modelType/thongKemodel';
 import { Input } from 'antd';
+import { Space } from 'antd';
+
 const MyComponentThongKeTheoTen = () => {
   const { Search } = Input;
   const [data, setData] = useState<Item[]>([]);
@@ -42,12 +44,12 @@ const MyComponentThongKeTheoTen = () => {
           <div className="kt-form__filtration">
             <div className="row align-items-center">
               <div className="col-md-3 kt-margin-bottom-10-mobile">
-                <Input.Group >
+                <Space.Compact >
                   <Search
                     placeholder="Tìm kiếm"
                     style={{ width: '20%' }}
                   />
-                </Input.Group>
+                </Space.Compact>
               </div>
             </div>
           </div>

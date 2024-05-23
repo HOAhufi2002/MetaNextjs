@@ -19,6 +19,7 @@ import {
 import { fetchDonHang, fetchDonHangChiTiet } from '../../../component/donHangcomponent/services/services';
 import { ListDonHang } from '../../../component/donHangcomponent/modelType/listDonHangModel';
 import { Input } from 'antd';
+import { Space } from 'antd';
 
 interface InvoiceDetailProps {
   selectedDonHang: any;
@@ -137,12 +138,12 @@ const MyComponentDonHang = () => {
           <div className="kt-form__filtration">
             <div className="row align-items-center">
               <div className="col-md-3 kt-margin-bottom-10-mobile">
-                <Input.Group >
+                <Space.Compact >
                   <Search
                     placeholder="Tìm kiếm"
                     style={{ width: '20%' }}
                   />
-                </Input.Group>
+                </Space.Compact>
               </div>
             </div>
           </div>
