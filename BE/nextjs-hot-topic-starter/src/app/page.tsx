@@ -1,14 +1,14 @@
 'use client'
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { dangNhap } from './[auth]/dangnhap/service'; // Import hàm dangNhap từ file service
-import './style.css'; // Import CSS file
+import { dangNhap } from './[auth]/dangnhap/service'; 
+import './style.css'; 
 
 const LoginForm = () => {
   const [error, setError] = useState('');
 
-  const onFinish = async (event: React.FormEvent<HTMLFormElement>) => { // Explicitly define type for event parameter
-    event.preventDefault(); // Prevent default form submission behavior
+  const onFinish = async (event: React.FormEvent<HTMLFormElement>) => { 
+    event.preventDefault(); 
 
     const formData = new FormData(event.currentTarget);
     const username = formData.get('username') as string;
@@ -21,7 +21,7 @@ const LoginForm = () => {
         message.success(`Bạn đã đăng nhập thành công với vai trò ${result.roleName}`);
         window.location.href = '/pages/banHang';
         localStorage.setItem('username', username);
-        localStorage.setItem('roleName', result.roleName); // Lưu thêm roleName vào localStorage
+        localStorage.setItem('roleName', result.roleName); 
         console.log(result)
 
       } else {
