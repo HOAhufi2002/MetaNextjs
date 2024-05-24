@@ -193,7 +193,7 @@ const ListComponent = () => {
             page={currentPage - 1}
             onPageChange={(event, newPage) => handleChangePage(newPage + 1)}
             onRowsPerPageChange={(event) => {
-              setPageSize(parseInt(event.target.value, 10));
+              setPageSize(parseInt(event.target.value, 5));
               setCurrentPage(1); // Reset current page when changing page size
             }}
           />

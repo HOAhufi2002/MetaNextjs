@@ -7,6 +7,7 @@ import { message } from 'antd';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import TablePagination from '@mui/material/TablePagination';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const MyComponent = () => {
   const [data, setData] = useState<Item[]>([]);
@@ -93,7 +94,13 @@ const MyComponent = () => {
       message.error('Đã xảy ra lỗi khi thêm đơn hàng!');
     }
   };
-
+  const handleRemoveProduct = (productIdToRemove: string) => {
+    const updatedProductQuantities = { ...productQuantities };
+    delete updatedProductQuantities[productIdToRemove];
+    setProductQuantities(updatedProductQuantities);
+    calculateTotalPrice(updatedProductQuantities);
+  };
+  
   const getPageData = () => {
     const startIndex = currentPage * pageSize;
     const endIndex = startIndex + pageSize;
@@ -136,7 +143,7 @@ const MyComponent = () => {
                           onChange={(e) => handleQuantityChange(row.idSanPham, parseInt(e.target.value))}
                           InputProps={{ disableUnderline: true, style: { width: '50px' , height :'50px', textAlign: 'center' } }}
                         />
-                        <IconButton onClick={() => handleQuantityChange(row.idSanPham, (productQuantities[row.idSanPham] || 1) + 1)}>
+                        <IconButton onClick={() => handleQuantityChange(row.idSanPham, (productQuantities[row.idSanPham] || 0) + 1)}>
                           <AddIcon />
                         </IconButton>
                       </div>
@@ -190,17 +197,21 @@ const MyComponent = () => {
     <div>
       <h3>Danh sách sản phẩm đã chọn:</h3>
       <ul>
-        {Object.keys(productQuantities).map(productId => {
-          const product = data.find(item => item.idSanPham.toString() === productId);
-          if (product) {
-            return (
-              <li key={productId}>
-                {product.tenSanPham} - ID: {productId} - Số lượng: {productQuantities[productId] || 1} - Giá: {(product.gia || 0) * (productQuantities[productId] || 1)}
-              </li>
-            );
-          }
-          return null;
-        })}
+      {Object.keys(productQuantities).map(productId => {
+  const product = data.find(item => item.idSanPham.toString() === productId);
+  if (product) {
+    return (
+      <li key={productId}>
+        {product.tenSanPham} - ID: {productId} - Số lượng: {productQuantities[productId] || 1} - Giá: {(product.gia || 0) * (productQuantities[productId] || 1)}
+        <IconButton onClick={() => handleRemoveProduct(productId)}>
+          <DeleteIcon style={{ color: 'red' }} /> {/* Biểu tượng x màu đỏ */}
+        </IconButton>
+      </li>
+    );
+  }
+  return null;
+})}
+
       </ul>
       <h3>Tổng tiền: {totalPrice}</h3>
     </div>

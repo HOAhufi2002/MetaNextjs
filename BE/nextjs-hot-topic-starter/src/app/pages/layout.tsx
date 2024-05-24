@@ -18,7 +18,7 @@ export default function MenuLayout({ children }: { children: React.ReactNode }) 
 
   const handleLogout = () => {
     localStorage.removeItem('username');
-    window.location.href = 'http://localhost:3000/auth/dangnhap';
+    window.location.href = 'http://localhost:3000/';
   };
 
   useEffect(() => {
@@ -29,15 +29,10 @@ export default function MenuLayout({ children }: { children: React.ReactNode }) 
         setIsLoading(false); // Set isLoading to false once username is found
       } else {
         setIsLoading(false); // Set isLoading to false if username is not found
-        if (window.location.pathname === 'http://localhost:3000/') {
-          window.location.href = 'http://localhost:3000/auth/dangnhap'; // Redirect to login page
-        } else {
-          window.location.href = 'http://localhost:3000/auth/dangnhap'; // Redirect to login page if username is not found
-        }
+        window.location.href = 'http://localhost:3000/'; // Redirect to login page
       }
     }
-  }, []);
-  
+  }, []); 
 
   // If still loading, show nothing
   if (isLoading) return null;

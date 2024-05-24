@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { message } from 'antd';
-import { dangNhap } from './service'; // Import hàm dangNhap từ file service
+import { dangNhap } from './[auth]/dangnhap/service'; // Import hàm dangNhap từ file service
 import './style.css'; // Import CSS file
 
 const LoginForm = () => {

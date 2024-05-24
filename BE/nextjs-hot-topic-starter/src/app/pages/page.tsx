@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import { Button, Checkbox, Form, Input, message } from 'antd';
-import { dangNhap } from '../auth/dangnhap/service'; // Import hàm dangNhap từ file service
+import { dangNhap } from '../[auth]/dangnhap/service'; // Import hàm dangNhap từ file service
 
 const LoginForm = () => {
   return (
