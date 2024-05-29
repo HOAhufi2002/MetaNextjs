@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <Compile Remove="Repositories\Authorization\**" />
+    <Content Remove="Repositories\Authorization\**" />
+    <EmbeddedResource Remove="Repositories\Authorization\**" />
+    <None Remove="Repositories\Authorization\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\Authorization\" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
   </ItemGroup>
 
 </Project>

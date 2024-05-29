@@ -16,7 +16,7 @@ const MainListItems: React.FC = () => {
   const [roleName, setRoleName] = useState<string | null>(null);
 
   useEffect(() => {
-    const role = localStorage.getItem('roleName');
+    const role = localStorage.getItem('tenNhomQuyen');
     setRoleName(role);
   }, []);
 
@@ -57,14 +57,14 @@ const MainListItems: React.FC = () => {
         </ListItemButton>
         <br />
         <br />
-        {roleName === 'Quản trị viên hệ thống' && (
+        {roleName === 'Quản Trị Viên' && (
           <>
             <a href="/pages/sanPham">
               <ListItemButton>
                 <ListItemIcon>
                   <DashboardIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Sản Phẩm" />
+                <ListItemText primary="Quản Lý Sản Phẩm" />
               </ListItemButton>
             </a>
 
@@ -73,7 +73,7 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon>
                   <ShoppingCartIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Loại Sản Phẩm" />
+                <ListItemText primary="Quản Lý Loại Sản Phẩm" />
               </ListItemButton>
             </a>
 
@@ -82,7 +82,7 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon>
                   <PeopleIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Bán hàng" />
+                <ListItemText primary="Quản Lý Bán hàng" />
               </ListItemButton>
             </a>
 
@@ -91,7 +91,7 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon>
                   <BarChartIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Lịch sử đặt hàng" />
+                <ListItemText primary="Quản Lý Lịch sử đặt hàng" />
               </ListItemButton>
             </a>
 
@@ -100,7 +100,7 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon>
                   <LayersIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Thống Kê Theo Ngày" />
+                <ListItemText primary="Quản Lý Thống Kê Theo Ngày" />
               </ListItemButton>
             </a>
 
@@ -109,7 +109,15 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon style={{ color: 'white' }}>
                   <LayersIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Thống Kê Theo Ngày Tên" />
+                <ListItemText primary="Quản Lý Thống Kê Theo Tên" />
+              </ListItemButton>
+            </a>
+            <a href="/pages/taiKhoan">
+              <ListItemButton style={{ color: 'white' }}>
+                <ListItemIcon style={{ color: 'white' }}>
+                  <LayersIcon style={{ color: 'white' }} />
+                </ListItemIcon>
+                <ListItemText primary="Quản Lý Tài Khoản" />
               </ListItemButton>
             </a>
           </>
@@ -122,7 +130,7 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon>
                   <PeopleIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Bán hàng" />
+                <ListItemText primary="Quản Lý Bán hàng" />
               </ListItemButton>
             </a>
 
@@ -131,7 +139,7 @@ const MainListItems: React.FC = () => {
                 <ListItemIcon>
                   <BarChartIcon style={{ color: 'white' }} />
                 </ListItemIcon>
-                <ListItemText primary="Lịch sử đặt hàng" />
+                <ListItemText primary="Quản Lý Lịch sử đặt hàng" />
               </ListItemButton>
             </a>
           </>

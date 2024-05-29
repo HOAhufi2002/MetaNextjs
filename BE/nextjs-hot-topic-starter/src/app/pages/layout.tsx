@@ -17,7 +17,7 @@ export default function MenuLayout({ children }: { children: React.ReactNode }) 
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('username');
+    localStorage.removeItem('token');
     window.location.href = 'http://localhost:3000/';
   };
 
@@ -29,7 +29,6 @@ export default function MenuLayout({ children }: { children: React.ReactNode }) 
         setIsLoading(false); // Set isLoading to false once username is found
       } else {
         setIsLoading(false); // Set isLoading to false if username is not found
-        window.location.href = 'http://localhost:3000/'; // Redirect to login page
       }
     }
   }, []); 

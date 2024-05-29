@@ -1,81 +1,142 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CoffeManagement.Controllers
+namespace CoffeeManagement.Controllers
 {
     [Route("api/login")]
     [ApiController]
-    public class AuthorizationController : Controller
+    public class AuthorizationController : ControllerBase
     {
         private readonly string _connectionString;
+        private readonly ILogger<AuthorizationController> _logger;
+        private readonly IConfiguration _config;
 
-        public AuthorizationController(IConfiguration configuration)
+
+        public AuthorizationController(IConfiguration configuration, ILogger<AuthorizationController> logger)
         {
             _connectionString = configuration.GetConnectionString("DefaultConnection");
+            _logger = logger;
+            _config = configuration;
+
+        }
+
+        private string HashPassword(string password)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(password);
+            using (SHA1Managed sha1 = new SHA1Managed())
+            {
+                byte[] hashBytes = sha1.ComputeHash(bytes);
+                string hashString = Convert.ToBase64String(hashBytes);
+                return hashString;
+            }
+
+        }
+
+        private async Task<string> CreateToken(UserData userData)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
+            var EXPIRE_HOURS = _config["JWT:JwtExpireHours"];
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var claims = new List<Claim>{
+                new Claim("UserId", userData.UserId.ToString()),
+                new Claim("Username", userData.Username),
+                new Claim("TenNhomQuyen", userData.TenNhomQuyen)
+            };
+            var descriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddHours(int.Parse(EXPIRE_HOURS)),
+                SigningCredentials = credentials
+            };
+            var token = tokenHandler.CreateToken(descriptor);
+            return await Task.FromResult(tokenHandler.WriteToken(token));
         }
 
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
         {
+            if (loginRequest == null || string.IsNullOrEmpty(loginRequest.Username) || string.IsNullOrEmpty(loginRequest.Password))
+            {
+                return BadRequest(new { message = "Invalid login request" });
+            }
+
             try
             {
-                bool isValid = ValidateLogin(username, password);
+                bool isValid = await ValidateLoginAsync(loginRequest.Username, loginRequest.Password);
                 if (isValid)
                 {
-                    var userData = GetUserData(username);
+                    var userData = await GetUserDataAsync(loginRequest.Username);
                     if (userData != null)
                     {
+                        var token = await CreateToken(userData);
                         return Ok(new
                         {
-                            message = "Đăng nhập thành công",
-                            userId = userData.userId,
-                            username = userData.username,
-                            roleName = userData.roleName,
-                            tenNhomQuyen = userData.tenNhomQuyen
+                            UserId = userData.UserId,
+                            Username = userData.Username,
+                            TenNhomQuyen = userData.TenNhomQuyen,
+                            token
                         });
                     }
                     else
                     {
-                        return StatusCode(500, new { message = "Không thể lấy thông tin người dùng" });
+                        return StatusCode(500, new { message = "Could not retrieve user information" });
                     }
                 }
                 else
                 {
-                    return BadRequest(new { message = "Tên đăng nhập hoặc mật khẩu không đúng" });
+                    return BadRequest(new { message = "Incorrect username or password" });
                 }
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Đã xảy ra lỗi trong quá trình xác thực", error = ex.Message });
+                _logger.LogError(ex, "An error occurred during login.");
+                return StatusCode(500, new { message = "An error occurred during authentication", error = ex.Message });
             }
         }
 
-        private UserData GetUserData(string username)
+        private async Task<UserData> GetUserDataAsync(string username)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
-                string query = @"SELECT n.idNguoiDung,  d.tenDangNhap, nq.tenNhomQuyen, q.tenQuyen
-                        FROM nguoidung n 
-                        JOIN dangnhap d ON n.idDangNhap = d.idDangNhap
-                        JOIN nhomquyen nq ON d.idNhomQuyen = nq.idNhomQuyen
-                        JOIN quyen q ON nq.idQuyen = q.idQuyen
-                        WHERE  d.tenDangNhap = @Username";
+                await connection.OpenAsync();
+                string query = @"
+                    SELECT n.idNguoiDung, d.tenDangNhap, nq.tenNhomQuyen
+                    FROM nguoidung n 
+                    JOIN dangnhap d ON n.idDangNhap = d.idDangNhap
+                    JOIN nhomquyen nq ON d.idNhomQuyen = nq.idNhomQuyen
+                    WHERE d.tenDangNhap = @Username";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Username", username);
-                using (SqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = await command.ExecuteReaderAsync())
                 {
-                    if (reader.Read())
+                    if (await reader.ReadAsync())
                     {
-                        return new UserData
+                        // Ensure indices are within bounds
+                        if (reader.FieldCount >= 3)
                         {
-                            userId = reader.GetInt32(0),
-                            username = reader.GetString(1),
-                            roleName = reader.GetString(2),
-                            tenNhomQuyen = reader.GetString(3)
-                        };
+                            return new UserData
+                            {
+                                UserId = reader.GetInt32(0),
+                                Username = reader.GetString(1),
+                                TenNhomQuyen = reader.GetString(2)
+                            };
+                        }
+                        else
+                        {
+                            _logger.LogError("Unexpected number of columns returned from the database.");
+                            throw new InvalidOperationException("Unexpected number of columns returned from the database.");
+                        }
                     }
                     else
                     {
@@ -85,30 +146,32 @@ namespace CoffeManagement.Controllers
             }
         }
 
-
-        private bool ValidateLogin(string username, string password)
+        private async Task<bool> ValidateLoginAsync(string username, string password)
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
-                connection.Open();
+                await connection.OpenAsync();
                 string query = "SELECT COUNT(*) FROM DangNhap WHERE tenDangNhap = @Username AND matKhau = @Password AND isDelete = 0";
                 SqlCommand command = new SqlCommand(query, connection);
                 command.Parameters.AddWithValue("@Username", username);
-                command.Parameters.AddWithValue("@Password", password);
-                int count = (int)command.ExecuteScalar();
+                // Use a secure hash comparison method for passwords
+                command.Parameters.AddWithValue("@Password",password);
+                int count = (int)await command.ExecuteScalarAsync();
                 return count > 0;
             }
         }
-
-       
-
     }
-}
-public class UserData
-{
-    public int userId { get; set; }
-    public string tenNhomQuyen { get; set; }
-    public string username { get; set; }
-    public string roleName { get; set; }
 
+    public class LoginRequest
+    {
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    public class UserData
+    {
+        public int UserId { get; set; }
+        public string Username { get; set; }
+        public string TenNhomQuyen { get; set; }
+    }
 }

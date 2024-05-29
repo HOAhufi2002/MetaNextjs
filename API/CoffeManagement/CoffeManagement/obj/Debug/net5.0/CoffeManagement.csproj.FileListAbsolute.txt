@@ -103,3 +103,10 @@ D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\obj\Debug\
 D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\obj\Debug\net5.0\ref\CoffeManagement.dll
 D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.pdb
 D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\obj\Debug\net5.0\CoffeManagement.genruntimeconfig.cache
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.IdentityModel.Logging.dll
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.dll
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
+D:\Intern Đại Phát\MetaNextjs\API\CoffeManagement\CoffeManagement\bin\Debug\net5.0\System.IdentityModel.Tokens.Jwt.dll

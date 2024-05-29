@@ -1,4 +1,5 @@
-
+﻿
+using CoffeManagement.Repositories.Account;
 using CoffeManagement.Repositories.ChiTietDonHang;
 using CoffeManagement.Repositories.DonHang;
 using CoffeManagement.Repositories.KhachHang;
@@ -6,6 +7,7 @@ using CoffeManagement.Repositories.LoaiSanPhamRepository;
 using CoffeManagement.Repositories.SanPham;
 using CoffeManagement.Repositories.ThongKe;
 using CoffeManagement.Services;
+using CoffeManagement.Services.Account;
 using CoffeManagement.Services.ChiTietDonHang;
 using CoffeManagement.Services.DonHang;
 using CoffeManagement.Services.KhachHang;
@@ -70,6 +72,27 @@ namespace CoffeManagement
                                .AllowAnyHeader();
                     });
             });
+            services.AddSwaggerGen(c =>
+            {
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Description = "Please enter into field the word 'Bearer' following by space and JWT",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    //Scheme = "bearer", // must be lower case
+                    Reference = new OpenApiReference
+                    {
+                        Id = "Bearer",
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                                        {
+                                            {securityScheme, new string[] { }}
+                                        });
+            });
             services.AddTransient<ISanPhamRepository, SanPhamRepository>();
             services.AddTransient<ISanPhamService,SanPhamService>();
 
@@ -87,6 +110,8 @@ namespace CoffeManagement
 
             services.AddTransient<IThongKeRepository, ThongKeRepository>();
             services.AddTransient<IThongKeService, ThongKeService>();
+            services.AddTransient<ITaiKhoanRepository, TaiKhoanRepository>();
+            services.AddTransient<ITaiKhoanService, TaiKhoanService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
